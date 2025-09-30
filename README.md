@@ -21,6 +21,7 @@ Swagger UI: http://localhost:8080/swagger
 OpenAPI спецификация: http://localhost:8080/openapi/documentation.yaml
 
     
+Endpoints
 
 - `GET /users` - получить всех пользователей
 - `GET /users/{id}` - получить пользователя по id 
