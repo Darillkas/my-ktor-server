@@ -4,7 +4,7 @@
 
 1.  Копируйте репозиторий:
     ```bash
-    git clone <your-repository-url>
+    git clone <repository-url>
     cd my-ktor-server
     ```
 
