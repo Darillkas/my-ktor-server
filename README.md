@@ -1,4 +1,4 @@
-Сервер на ктор Простой сервер с get post delete 
+Сервер на Ktor с автоматической документацией Swagger, тестами и логированием.
 
 Как запустить 
 
@@ -15,6 +15,11 @@
 4.  запустить приложение
     shift + f10
 
+Документация API:
+Swagger UI: http://localhost:8080/swagger
+
+OpenAPI спецификация: http://localhost:8080/openapi/documentation.yaml
+
     
 
 - `GET /users` - получить всех пользователей
@@ -22,6 +27,7 @@
 - `POST /users` - создать пользователя (`{"name": "...", "email": "..."}`)
 - `DELETE /users/{id}` - удалить пользователя по id
 - `GET /search?name=...` - найти пользователя
+-  'GET'	/health	Проверка сервера
 
 Проверка 
 
