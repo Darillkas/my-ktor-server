@@ -33,9 +33,10 @@ REST API сервис для интернет-магазина с аутенти
 
 Вариант 2: Запуск через Gradle
 
-```bash
-
+bash
 ./gradlew run
+
+
 
 Swagger: http://localhost:8080/swagger
 
