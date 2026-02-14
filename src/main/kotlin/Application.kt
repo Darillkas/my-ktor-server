@@ -30,17 +30,15 @@ fun main() {
 }
 
 fun Application.module() {
-    // Initialize database
+
     DatabaseConfig.init()
 
-    // Initialize RabbitMQ
     try {
         RabbitMQConfig.initialize()
     } catch (e: Exception) {
         log.error("Failed to initialize RabbitMQ: ${e.message}")
     }
 
-    // Install plugins
     install(ContentNegotiation) {
         json(Json {
             prettyPrint = true
@@ -61,22 +59,22 @@ fun Application.module() {
         }
     }
 
-    // Configure security
+
     configureSecurity()
 
-    // Initialize repositories
+
     val userRepository = UserRepository()
     val productRepository = ProductRepository()
     val orderRepository = OrderRepository()
     val auditRepository = AuditRepository()
 
-    // Initialize cache
+
     val productCache = ProductCache()
 
     // Initialize queue
     val eventProducer = OrderEventProducer()
 
-    // Initialize services
+
     val authService = AuthService(userRepository, auditRepository)
     val productService = ProductService(productRepository, auditRepository, productCache)
     val orderService = OrderService(
@@ -98,19 +96,19 @@ fun Application.module() {
         }
     }
 
-    // Configure routes
+
     routing {
         // Swagger documentation
         swaggerUI(path = "swagger", swaggerFile = "openapi/documentation.yaml")
         openAPI(path = "openapi/documentation.yaml", swaggerFile = "openapi/documentation.yaml")
 
-        // API routes
+
         authRoutes(authService)
         productRoutes(productService)
         orderRoutes(orderService)
         adminRoutes(orderService, auditService)
 
-        // Public health check
+
         get("/health") {
             call.respond(mapOf(
                 "status" to "OK",

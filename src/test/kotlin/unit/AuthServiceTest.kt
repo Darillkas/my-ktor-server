@@ -15,11 +15,11 @@ class AuthServiceTest {
 
     @Test
     fun `test register new user success`() = runBlocking {
-        // Mock repositories
+
         val userRepo = mockk<UserRepository>()
         val auditRepo = mockk<AuditRepository>()
 
-        // Define behavior
+
         coEvery { userRepo.findByUsername("testuser") } returns null
         coEvery { userRepo.findByEmail(any()) } returns null
         coEvery { userRepo.findAll() } returns emptyList()
@@ -38,7 +38,7 @@ class AuthServiceTest {
         val authService = AuthService(userRepo, auditRepo)
         val (user, token) = authService.register("testuser", "test@example.com", "password")
 
-        // Assert
+
         assertEquals(1, user.id)
         assertEquals("testuser", user.username)
         assertNotNull(token)
@@ -48,11 +48,11 @@ class AuthServiceTest {
 
     @Test
     fun `test register with existing username throws exception`() = runBlocking {
-        // Mock repositories
+
         val userRepo = mockk<UserRepository>()
         val auditRepo = mockk<AuditRepository>()
 
-        // Define behavior
+
         coEvery { userRepo.findByUsername("existing") } returns mockk()
 
         // Test
@@ -65,7 +65,7 @@ class AuthServiceTest {
 
     @Test
     fun `test login success`() = runBlocking {
-        // Mock repositories
+
         val userRepo = mockk<UserRepository>()
         val auditRepo = mockk<AuditRepository>()
 
@@ -79,15 +79,14 @@ class AuthServiceTest {
             updatedAt = LocalDateTime.now()
         )
 
-        // Define behavior
         coEvery { userRepo.authenticate("testuser", "password") } returns user
         coEvery { auditRepo.log(any(), any(), any(), any(), any()) } just Runs
 
-        // Test
+
         val authService = AuthService(userRepo, auditRepo)
         val result = authService.login("testuser", "password")
 
-        // Assert
+
         assertNotNull(result)
         val (userResponse, token) = result
         assertEquals(1, userResponse.id)

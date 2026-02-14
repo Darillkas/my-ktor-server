@@ -13,7 +13,7 @@ object AuthMiddleware {
         application.intercept(ApplicationCallPipeline.Features) {
             val principal = call.principal<JWTPrincipal>()
 
-            // Add user info to attributes for later use
+
             if (principal != null) {
                 val userId = principal.payload.getClaim("userId").asInt()
                 val username = principal.payload.getClaim("username").asString()

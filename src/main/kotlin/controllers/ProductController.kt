@@ -13,7 +13,7 @@ import com.example.middleware.AuthMiddleware.requireRole
 
 fun Route.productRoutes(productService: ProductService) {
     route("/products") {
-        // Публичные маршруты (без аутентификации)
+
         get {
             val limit = call.request.queryParameters["limit"]?.toIntOrNull() ?: 100
             val offset = call.request.queryParameters["offset"]?.toIntOrNull() ?: 0
@@ -33,7 +33,7 @@ fun Route.productRoutes(productService: ProductService) {
             }
         }
 
-        // Защищенные админские маршруты
+
         authenticate("auth-jwt") {
             requireRole("ADMIN")
 

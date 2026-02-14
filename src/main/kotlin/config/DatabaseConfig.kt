@@ -29,7 +29,7 @@ object DatabaseConfig {
             // Run Flyway migrations
             val flyway = Flyway.configure()
                 .dataSource(dataSource)
-                .locations("classpath:db/migration")  // Используем classpath вместо filesystem
+                .locations("classpath:db/migration")
                 .baselineOnMigrate(true)
                 .load()
 

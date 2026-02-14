@@ -18,7 +18,6 @@ class ProductRepositoryTest {
 
     @Before
     fun setUp() {
-        // Start PostgreSQL container
         postgres = PostgreSQLContainer<Nothing>("postgres:15").apply {
             withDatabaseName("test_db")
             withUsername("test")
@@ -26,12 +25,12 @@ class ProductRepositoryTest {
             start()
         }
 
-        // Set system properties for database connection
+
         System.setProperty("DATABASE_URL", postgres.jdbcUrl)
         System.setProperty("DB_USERNAME", postgres.username)
         System.setProperty("DB_PASSWORD", postgres.password)
 
-        // Initialize database
+
         DatabaseConfig.init()
         productRepository = ProductRepository()
     }
@@ -43,7 +42,6 @@ class ProductRepositoryTest {
 
     @Test
     fun `test create and find product`() = runBlocking {
-        // Create product
         val request = ProductRequest(
             name = "Test Product",
             description = "Test Description",
@@ -53,7 +51,7 @@ class ProductRepositoryTest {
 
         val created = productRepository.create(request)
 
-        // Find product
+
         val found = productRepository.findById(created.id)
 
         assertNotNull(found)
@@ -74,11 +72,11 @@ class ProductRepositoryTest {
 
         val created = productRepository.create(request)
 
-        // Update stock
+
         val updated = productRepository.updateStock(created.id, 5)
         assertTrue(updated)
 
-        // Check stock
+
         val product = productRepository.findById(created.id)!!
         assertEquals(15, product.stock)
     }

@@ -14,10 +14,10 @@ class OrderRepository : BaseRepository() {
 
     suspend fun create(userId: Int, items: List<OrderItemRequest>): Order {
         return dbQuery {
-            // Calculate total amount
+
             val totalAmount = calculateTotal(items)
 
-            // Create order
+
             val now = LocalDateTime.now()
             val orderId = Orders.insert {
                 it[Orders.userId] = userId

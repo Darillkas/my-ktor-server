@@ -12,7 +12,7 @@ class AuthService(
 ) {
 
     suspend fun register(username: String, email: String, password: String): Pair<UserResponse, String> {
-        // Check if user exists
+
         if (userRepository.findByUsername(username) != null) {
             throw IllegalArgumentException("Username already taken")
         }
@@ -21,17 +21,17 @@ class AuthService(
             throw IllegalArgumentException("Email already registered")
         }
 
-        // Check if this is the first user (make admin)
+
         val allUsers = userRepository.findAll()
         val role = if (allUsers.isEmpty()) UserRole.ADMIN else UserRole.USER
 
-        // Create user
+
         val user = userRepository.create(username, email, password, role)
 
-        // Generate token
+
         val token = JwtConfig.generateToken(user)
 
-        // Audit log
+
         auditRepository.log(
             userId = user.id,
             action = "REGISTER",
@@ -49,7 +49,7 @@ class AuthService(
         // Generate token
         val token = JwtConfig.generateToken(user)
 
-        // Audit log
+
         auditRepository.log(
             userId = user.id,
             action = "LOGIN",

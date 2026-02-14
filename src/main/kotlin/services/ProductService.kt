@@ -16,10 +16,10 @@ class ProductService(
     suspend fun createProduct(request: ProductRequest, userId: Int): ProductResponse {
         val product = productRepository.create(request)
 
-        // Clear cache
+
         productCache.clear()
 
-        // Audit log
+
         auditRepository.log(
             userId = userId,
             action = "CREATE_PRODUCT",
@@ -34,10 +34,10 @@ class ProductService(
     suspend fun updateProduct(id: Int, request: ProductRequest, userId: Int): ProductResponse? {
         val product = productRepository.update(id, request) ?: return null
 
-        // Clear cache for this product
+
         productCache.clear(id)
 
-        // Audit log
+
         auditRepository.log(
             userId = userId,
             action = "UPDATE_PRODUCT",
@@ -53,10 +53,10 @@ class ProductService(
         val result = productRepository.delete(id)
 
         if (result) {
-            // Clear cache
+
             productCache.clear(id)
 
-            // Audit log
+
             auditRepository.log(
                 userId = userId,
                 action = "DELETE_PRODUCT",
@@ -70,14 +70,14 @@ class ProductService(
     }
 
     suspend fun getProduct(id: Int): ProductResponse? {
-        // Try cache first
+
         var product = productCache.get(id)
 
         if (product == null) {
-            // Get from DB
+
             product = productRepository.findById(id)
 
-            // Cache if found
+
             if (product != null) {
                 productCache.set(id, product)
             }

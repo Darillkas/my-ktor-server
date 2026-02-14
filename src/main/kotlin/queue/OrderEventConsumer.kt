@@ -54,10 +54,10 @@ class OrderEventConsumer(
 
         logger.info("Processing order created event: Order ID ${event.orderId}, User ID ${event.userId}")
 
-        // Simulate email sending
+
         sendEmail(event.userId, "Order Confirmation", "Your order #${event.orderId} has been created")
 
-        // Log to audit
+
         auditService.log(
             userId = event.userId,
             action = "ORDER_EVENT_PROCESSED",
@@ -72,10 +72,10 @@ class OrderEventConsumer(
 
         logger.info("Processing order cancelled event: Order ID ${event.orderId}, User ID ${event.userId}")
 
-        // Simulate email sending
+
         sendEmail(event.userId, "Order Cancelled", "Your order #${event.orderId} has been cancelled")
 
-        // Log to audit
+
         auditService.log(
             userId = event.userId,
             action = "ORDER_EVENT_PROCESSED",
@@ -86,7 +86,7 @@ class OrderEventConsumer(
     }
 
     private suspend fun sendEmail(userId: Int, subject: String, content: String) {
-        // Simulate email sending
+
         delay(100)
         logger.info("Email sent to user $userId: $subject - $content")
     }

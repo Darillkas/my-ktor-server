@@ -20,7 +20,7 @@ class OrderService(
 ) {
 
     suspend fun createOrder(userId: Int, request: OrderRequest): OrderResponse {
-        // Проверка стока
+
         for (item in request.items) {
             if (!productService.checkAndUpdateStock(item.productId, item.quantity)) {
                 val product = productRepository.findById(item.productId)
@@ -28,7 +28,7 @@ class OrderService(
             }
         }
 
-        // Создание заказа
+
         val order = orderRepository.create(userId, request.items)
 
         // Аудит

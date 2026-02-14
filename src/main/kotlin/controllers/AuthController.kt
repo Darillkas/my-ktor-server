@@ -16,13 +16,7 @@ import io.ktor.server.auth.*
 
 fun Route.authRoutes(authService: AuthService) {
     route("/auth") {
-        /**
-         * Register a new user
-         * @body AuthRequest { username, password }
-         * @response 201 Created with token and user info
-         * @response 400 Bad Request if validation fails
-         * @response 409 Conflict if user exists
-         */
+
         post("/register") {
             val request = try {
                 call.receive<AuthRequest>()
@@ -34,7 +28,7 @@ fun Route.authRoutes(authService: AuthService) {
             try {
                 val (user, token) = authService.register(
                     username = request.username,
-                    email = "${request.username}@example.com", // Simplified
+                    email = "${request.username}@example.com",
                     password = request.password
                 )
 
@@ -49,12 +43,7 @@ fun Route.authRoutes(authService: AuthService) {
             }
         }
 
-        /**
-         * Login user
-         * @body AuthRequest { username, password }
-         * @response 200 OK with token and user info
-         * @response 401 Unauthorized if credentials invalid
-         */
+
         post("/login") {
             val request = try {
                 call.receive<AuthRequest>()

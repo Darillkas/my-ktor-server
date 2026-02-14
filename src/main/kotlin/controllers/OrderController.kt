@@ -13,13 +13,7 @@ import io.ktor.server.auth.jwt.*
 fun Route.orderRoutes(orderService: OrderService) {
     route("/orders") {
         authenticate("auth-jwt") {
-            /**
-             * Create new order
-             * @body OrderRequest { items: [{ productId, quantity }] }
-             * @response 201 Created with order details
-             * @response 400 Bad Request if validation fails
-             * @response 409 Conflict if insufficient stock
-             */
+
             post {
                 val principal = call.principal<JWTPrincipal>()
                 val userId = principal?.getClaim("userId", Int::class)
@@ -45,10 +39,7 @@ fun Route.orderRoutes(orderService: OrderService) {
                 }
             }
 
-            /**
-             * Get user's orders
-             * @response 200 OK with list of orders
-             */
+
             get {
                 val principal = call.principal<JWTPrincipal>()
                 val userId = principal?.getClaim("userId", Int::class)
@@ -58,12 +49,7 @@ fun Route.orderRoutes(orderService: OrderService) {
                 call.respond(orders)
             }
 
-            /**
-             * Cancel order
-             * @param id order ID
-             * @response 204 No Content if cancelled
-             * @response 404 Not Found if order doesn't exist or doesn't belong to user
-             */
+
             delete("/{id}") {
                 val principal = call.principal<JWTPrincipal>()
                 val userId = principal?.getClaim("userId", Int::class)
